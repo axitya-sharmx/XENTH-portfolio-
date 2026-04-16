@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aditya Sharma — Cinematic Photography Portfolio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #120A18;
+            --bg-main: #1E0233;
+            --card-bg: #2A0A3F;
+            --text-primary: #F5EDE9;
+            --text-secondary: #CBB6AF;
+            --accent: #5A0F2E;
+            --accent-hover: #6E1A3A;
+            --border-subtle: #895575;
+            --bg: var(--bg-dark);
+            --bg-soft: var(--bg-main);
+            --text: var(--text-primary);
+            --text-muted: var(--text-secondary);
+            --purple-deep: #1E0233;
+            --purple-main: #342D50;
+            --plum: #895575;
+            --wine: #5A0F2E;
+            --wine-soft: #6E1A3A;
+            --wine-deep: #4A0A24;
+            --beige: #E7D3CC;
+            --border: var(--border-subtle);
+            --highlight: #C9A6FF;
+            --deep-purple: var(--purple-deep);
+            --main-purple: var(--text-primary);
+            --soft-beige: var(--beige);
+            --ink: var(--text);
+            --mid: var(--text-muted);
+            --line: var(--border-subtle);
+            --surface-soft: rgba(42, 10, 63, 0.85);
+            --surface-soft-strong: rgba(42, 10, 63, 0.95);
+            --overlay-deep: rgba(18, 10, 24, 0.88);
+            --overlay-tint: rgba(30, 2, 51, 0.66);
+            --overlay-wine: rgba(122, 28, 46, 0.15);
+            --shadow-purple: rgba(30, 2, 51, 0.28);
+            --shadow-purple-soft: rgba(52, 45, 80, 0.34);
+            --shadow-wine-soft: rgba(122, 28, 46, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-main));
+            color: var(--ink);
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            cursor: none;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        :where(a, button, input, textarea, .contact-field, .contact-submit, .nav-links a, .socials a, .contact-email, .g-item, .strip-item, .story-img) {
+            transition: all 0.3s ease;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--main-purple);
+        }
+
+        a {
+            color: var(--accent);
+        }
+
+        p {
+            color: var(--text-secondary);
+        }
+
+        body.page-ready {
+            opacity: 1;
+        }
+
+        #page-veil {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, var(--main-purple) 0%, var(--bg) 100%);
+            z-index: 9998;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 1.1s cubic-bezier(.23, 1, .32, 1), visibility 1.1s;
+            visibility: visible;
+        }
+
+        #page-veil.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* ── Custom Cursor ── */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ink);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+        }
+
+        #cursor-ring {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--ink);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            transition: transform 0.25s cubic-bezier(.23, 1, .32, 1), width 0.4s, height 0.4s, opacity 0.3s;
+            opacity: 0.5;
+        }
+
+        body.hovering #cursor-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+        }
+
+        body.hovering #cursor-ring {
+            width: 56px;
+            height: 56px;
+            opacity: 0.25;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 36px 78px;
+            background: rgba(18, 10, 24, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-family: 'Times New Roman', 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            line-height: 1;
+            color: var(--ink);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-primary);
+            user-select: none;
+        }
+
+        .nav-links a {
+            font-size: 0.72rem;
+            font-weight: 300;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--accent-hover);
+            border-bottom-color: var(--accent);
+        }
+
+        .nav-links a:active,
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ── Hero ── */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 78px 120px;
+            position: relative;
+            overflow: hidden;
+            background-color: #120A18;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-color: #120A18;
+        }
+
+        .hero-img-frame {
+            position: absolute;
+            top: 7%;
+            right: 4%;
+            width: 38vw;
+            height: 82vh;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            padding: 8px;
+            border-radius: 16px;
+            background: rgba(42, 10, 63, 0.2);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(137, 85, 117, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease;
+        }
+
+        .hero-img-frame img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.05);
+            animation: heroReveal 1.2s ease-out forwards;
+            border-radius: 14px;
+            border: 1px solid rgba(137, 85, 117, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .hero-img-frame:hover {
+                transform: scale(1.01);
+            }
+        }
+
+        .hero-line {
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            width: 1px;
+            height: 120px;
+            background: var(--ink);
+            opacity: 0.15;
+            transform: translateY(-50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 560px;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.35s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4.2rem, 7vw, 7rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.5s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--highlight);
+        }
+
+        .hero-sub {
+            margin-top: 24px;
+            font-size: 0.9rem;
+            color: var(--mid);
+            line-height: 1.8;
+            max-width: 380px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.65s forwards;
+        }
+
+        .hero-cta {
+            margin-top: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.8s forwards;
+        }
+
+        .hero-cta span {
+            display: inline-block;
+            width: 48px;
+            height: 1px;
+            background: var(--ink);
+            transition: width 0.4s;
+        }
+
+        .hero-cta:hover span {
+            width: 72px;
+        }
+
+        /* ── Section Shared ── */
+        section {
+            padding: 160px 78px;
+            background-color: #2A0A3F;
+        }
+
+        section {
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .section-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 64px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1px;
+            background: var(--mid);
+        }
+
+        /* ── Gallery ── */
+        #work {
+            background-color: #1A0D2A;
+        }
+
+        .gallery {
+            position: relative;
+        }
+
+        .gallery-intro {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: end;
+            margin-bottom: 110px;
+            gap: 84px;
+        }
+
+        .gallery-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 5vw, 4.8rem);
+            font-weight: 300;
+            line-height: 1.06;
+            max-width: 560px;
+        }
+
+        .gallery-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            color: var(--mid);
+            line-height: 1.9;
+            max-width: 330px;
+            text-align: left;
+            justify-self: end;
+        }
+
+        .gallery-grid {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            gap: 20px;
+            padding: 20px;
+            scroll-behavior: auto;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+            will-change: transform;
+        }
+
+        .g-item {
+            flex: 0 0 auto;
+            width: 280px;
+            overflow: hidden;
+            position: relative;
+            background: rgba(42, 10, 63, 0.15);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(137, 85, 117, 0.4);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 6px;
+            cursor: pointer;
+            scroll-snap-align: start;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            touch-action: manipulation; /* Improve touch response */
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile */
+        }
+
+        .g-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--overlay-wine);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .g-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.01);
+            border-radius: 8px;
+            transition: transform 1.1s cubic-bezier(.23, 1, .32, 1), filter 0.7s;
+            filter: brightness(0.95) contrast(1.01) saturate(0.95);
+        }
+
+        .g-item.gallery-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 2s ease-out, transform 2s ease-out;
+            transition-delay: calc(var(--index, 0) * 0.1s);
+        }
+
+        .g-item.gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .g-item img.gallery-img {
+            opacity: 0;
+            transition: opacity 2s ease-out;
+            transition-delay: calc(var(--index, 0) * 0.1s);
+        }
+
+        .g-item.gallery-item.visible img.gallery-img.loaded {
+            opacity: 1;
+        }
+
+        .g-item:hover img {
+            transform: scale(1.07);
+            filter: brightness(1.03) contrast(1.05) saturate(1.04);
+        }
+
+        .g-item:hover {
+            transform: translateY(-4px);
+            background: rgba(42, 10, 63, 0.25);
+            border-color: rgba(137, 85, 117, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .g-item:hover::after {
+            opacity: 1;
+        }
+
+        /* ── Trending Section - Editorial Grid ── */
+        #trending {
+            background: var(--bg);
+            padding: 80px 20px;
+        }
+
+        .trending-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .trending-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .trending-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .trending-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 320px);
+            }
+
+            .trending-item:first-child {
+                grid-column: span 2;
+                grid-row: span 2;
+            }
+
+            .trending-item:first-child img {
+                height: 100%;
+                min-height: 600px;
+            }
+        }
+
+        .trending-item {
+            position: relative;
+            overflow: hidden;
+            background: rgba(42, 10, 63, 0.15);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(137, 85, 117, 0.4);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 6px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 2s ease-out, transform 2s ease-out;
+            transition-delay: calc(var(--index, 0) * 0.1s);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .trending-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .trending-item:hover {
+            transform: translateY(-4px);
+            background: rgba(42, 10, 63, 0.25);
+            border-color: rgba(137, 85, 117, 0.7);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .trending-item img {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 1.2s cubic-bezier(.23, 1, .32, 1), filter 0.7s;
+            filter: brightness(0.95) contrast(1.01) saturate(0.95);
+            opacity: 0;
+            transition: opacity 2s ease-out, transform 1.2s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .trending-item.visible img.loaded {
+            opacity: 1;
+        }
+
+        .trending-item:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.02) contrast(1.03) saturate(1.02);
+        }
+
+        .trending-rank {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(90, 15, 46, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(137, 85, 117, 0.3);
+            letter-spacing: 0.1em;
+            z-index: 5;
+        }
+
+        .trending-item:first-child .trending-rank {
+            font-size: 1.1rem;
+            padding: 8px 16px;
+        }
+
+        .trending-likes {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(18, 10, 24, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(137, 85, 117, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 5;
+        }
+
+        .trending-likes svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--accent);
+        }
+
+        /* ── Loading Skeleton / Placeholder ── */
+        .skeleton-card {
+            background: rgba(42, 10, 63, 0.2);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(137, 85, 117, 0.25);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-grid .skeleton-card {
+            flex: 0 0 auto;
+            width: 280px;
+            height: 320px;
+            padding: 6px;
+        }
+
+        .gallery-grid .skeleton-inner {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(
+                90deg,
+                rgba(90, 15, 46, 0.1) 0%,
+                rgba(90, 15, 46, 0.2) 50%,
+                rgba(90, 15, 46, 0.1) 100%
+            );
+            background-size: 200% 100%;
+            border-radius: 8px;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        .trending-grid .skeleton-card {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            padding: 6px;
+        }
+
+        .trending-item:first-child .skeleton-card {
+            min-height: 600px;
+        }
+
+        .trending-grid .skeleton-inner {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(90, 15, 46, 0.1) 0%,
+                rgba(90, 15, 46, 0.2) 50%,
+                rgba(90, 15, 46, 0.1) 100%
+            );
+            background-size: 200% 100%;
+            border-radius: 8px;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ── Error Messages ── */
+        .gallery-error {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(42, 10, 63, 0.2);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(137, 85, 117, 0.3);
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 400px;
+            letter-spacing: 0.05em;
+        }
+
+        /* Double-tap heart animation */
+        .double-tap-heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+        }
+
+        .double-tap-heart svg {
+            width: 100%;
+            height: 100%;
+            fill: rgba(255, 255, 255, 0.9);
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .double-tap-heart.animate {
+            animation: heartPop 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes heartPop {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            40% {
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+            60% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .g-item-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 20px 18px;
+            background: linear-gradient(transparent, var(--overlay-tint));
+            color: var(--text);
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .g-item:hover .g-item-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .like-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .like-btn {
+            background: rgba(18, 10, 24, 0.7);
+            border: 1px solid rgba(137, 85, 117, 0.4);
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            width: 32px;
+            height: 32px;
+        }
+
+        .like-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text);
+            fill: none;
+            stroke-width: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        .like-btn:hover {
+            background: rgba(90, 15, 46, 0.8);
+            border-color: var(--accent);
+        }
+
+        .like-btn:hover svg {
+            stroke: var(--accent);
+        }
+
+        .like-btn.liked svg {
+            fill: var(--accent);
+            stroke: var(--accent);
+        }
+
+        .like-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .like-btn:disabled svg {
+            fill: var(--accent);
+            stroke: var(--accent);
+        }
+
+        .like-btn.animate-like svg {
+            animation: likePop 350ms cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .like-btn.animate-like {
+            animation: likeGlow 350ms ease-out;
+        }
+
+        @keyframes likePop {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.35); }
+            70% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes likeGlow {
+            0% { box-shadow: 0 0 0 0 rgba(90, 15, 46, 0.6); }
+            40% { box-shadow: 0 0 20px 4px rgba(90, 15, 46, 0.4); }
+            100% { box-shadow: 0 0 0 0 rgba(90, 15, 46, 0); }
+        }
+
+        .like-count {
+            color: white;
+            font-size: 12px;
+        }
+
+        .gallery-grid::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .gallery-grid::-webkit-scrollbar-thumb {
+            background: rgba(137, 85, 117, 0.5);
+            border-radius: 10px;
+        }
+
+        .gallery-lightbox {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay-deep);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            z-index: 120;
+        }
+
+        .gallery-lightbox.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .gallery-lightbox img {
+            max-width: min(1200px, 92vw);
+            max-height: 86vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px var(--shadow-purple-soft);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+
+        /* ── Story / Philosophy ── */
+        #story {
+            background-color: #221238;
+            color: var(--text);
+        }
+
+        .story-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(40px, 6vw, 60px);
+            width: 100%;
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
+        .story-img {
+            flex: 0 0 clamp(280px, 30vw, 320px);
+            width: clamp(280px, 30vw, 320px);
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            position: relative;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.45s ease, box-shadow 0.45s ease;
+        }
+
+        .story-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--overlay-wine);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .story-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .story-img:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--shadow-wine-soft);
+        }
+
+        .story-img:hover img {
+            transform: scale(1.03);
+        }
+
+        .story-img:hover::after {
+            opacity: 1;
+        }
+
+        .story-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .story-text .section-label {
+            color: rgba(234, 234, 240, 0.55);
+        }
+
+        .story-text .section-label::before {
+            background: rgba(234, 234, 240, 0.55);
+        }
+
+        .story-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.4rem, 4.2vw, 4rem);
+            font-weight: 300;
+            line-height: 1.08;
+            margin-bottom: 38px;
+        }
+
+        .story-heading em {
+            font-style: italic;
+            color: var(--highlight);
+        }
+
+        .story-body {
+            font-size: 1rem;
+            line-height: 2.08;
+            color: rgba(234, 234, 240, 0.78);
+            max-width: 600px;
+        }
+
+        .story-body p+p {
+            margin-top: 20px;
+        }
+
+        .story-stats {
+            margin-top: 56px;
+            display: flex;
+            gap: 48px;
+        }
+
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(234, 234, 240, 0.55);
+            margin-top: 6px;
+        }
+
+        /* ── Featured Story ── */
+        #featured {
+            background: var(--bg);
+            text-align: center;
+        }
+
+        .featured-label {
+            justify-content: center;
+        }
+
+        .featured-label::before {
+            display: none;
+        }
+
+        .featured-label::after {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1px;
+            background: var(--mid);
+        }
+
+        .featured-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 300;
+            margin-bottom: 64px;
+            line-height: 1.1;
+        }
+
+        .featured-strip {
+            display: flex;
+            gap: 2px;
+            height: 480px;
+        }
+
+        .strip-item {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            transition: flex 1.2s cubic-bezier(.23, 1, .32, 1);
+            cursor: none;
+            border: 1px solid var(--line);
+            background-color: var(--card-bg);
+        }
+
+        .strip-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--overlay-wine);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .strip-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.01);
+            transition: transform 1.8s cubic-bezier(.23, 1, .32, 1), filter 1.1s;
+            filter: brightness(0.95) saturate(0.95);
+        }
+
+        .strip-item:hover {
+            flex: 3.5;
+        }
+
+        .strip-item:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.02) saturate(1.02);
+        }
+
+        .strip-item:hover::after {
+            opacity: 1;
+        }
+
+        .strip-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--overlay-tint) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            display: flex;
+            align-items: flex-end;
+            padding: 28px;
+        }
+
+        .strip-item:hover .strip-overlay {
+            opacity: 1;
+        }
+
+        .strip-text {
+            color: var(--text);
+            text-align: left;
+        }
+
+        .strip-text h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+        }
+
+        .strip-text span {
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0.65;
+        }
+
+        /* ── Contact ── */
+        #contact {
+            background: var(--bg-soft);
+            text-align: center;
+            border-top: 1px solid var(--line);
+        }
+
+        .contact-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 6.2rem);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 28px;
+        }
+
+        .contact-heading em {
+            font-style: italic;
+            color: var(--mid);
+        }
+
+        .contact-sub {
+            font-size: 0.88rem;
+            color: var(--mid);
+            margin-bottom: 52px;
+        }
+
+        .contact-form {
+            width: min(720px, 100%);
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .contact-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .contact-field {
+            width: 100%;
+            border: 1px solid var(--line);
+            background: var(--card-bg);
+            color: var(--ink);
+            font: inherit;
+            font-size: 0.9rem;
+            padding: 14px 16px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .contact-field:focus {
+            border-color: var(--accent);
+            background: var(--surface-soft-strong);
+            box-shadow: 0 0 0 3px rgba(122, 28, 46, 0.24);
+        }
+
+        textarea.contact-field {
+            min-height: 140px;
+            resize: vertical;
+            margin-bottom: 14px;
+        }
+
+        .contact-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-submit {
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 26px;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: none;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .contact-submit:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            color: #fff;
+            box-shadow: 0 0 20px var(--shadow-wine-soft);
+        }
+
+        .contact-submit:active {
+            background: var(--wine-soft);
+            border-color: var(--wine-soft);
+            color: #fff;
+        }
+
+        .contact-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .contact-status {
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--mid);
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .contact-status.show {
+            animation: statusPop 0.6s cubic-bezier(.23, 1, .32, 1) forwards;
+        }
+
+        .contact-status.success {
+            color: var(--highlight);
+        }
+
+        .contact-status.error {
+            color: var(--wine-soft);
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 4px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .contact-email:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .socials {
+            margin-top: 56px;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .socials a {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .socials a:hover {
+            color: var(--accent-hover);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border: 1px solid rgba(137, 85, 117, 0.4);
+            padding: 10px 16px;
+            border-radius: 8px;
+            letter-spacing: 0.08em;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .social-links a:hover {
+            background: rgba(90, 15, 46, 0.2);
+            border-color: rgba(137, 85, 117, 0.7);
+            color: var(--text-primary);
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 34px 78px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--line);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            color: var(--mid);
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(.23, 1, .32, 1),
+                transform 0.6s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Keyframes ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroReveal {
+            from {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes statusPop {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 769px) {
+            body {
+                padding-top: 84px;
+            }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            nav {
+                padding: 22px 28px;
+            }
+
+            .nav-logo {
+                font-size: 1.35rem;
+            }
+
+            #hero {
+                padding: 0 28px 70px;
+            }
+
+            .hero-img-frame {
+                width: 54vw;
+                top: 10%;
+                right: 0;
+            }
+
+            section {
+                padding: 95px 28px;
+            }
+
+            .gallery-intro {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .gallery-desc {
+                text-align: left;
+                justify-self: start;
+            }
+
+            .gallery-grid {
+                gap: 16px;
+                padding: 16px;
+            }
+
+            #story {
+                text-align: center;
+            }
+
+            .story-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 28px;
+            }
+
+            .story-img {
+                width: min(82vw, 320px);
+                flex-basis: auto;
+            }
+
+            .story-text {
+                max-width: 600px;
+            }
+
+            .story-text .section-label {
+                justify-content: center;
+            }
+
+            .story-text .section-label::before {
+                display: none;
+            }
+
+            .contact-row {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .featured-strip {
+                height: 340px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+            }
+
+            .nav-right {
+                gap: 16px;
+            }
+
+            #visit-counter {
+                padding: 5px 10px;
+                font-size: 0.6rem;
+            }
+
+            #visit-counter svg {
+                width: 13px;
+                height: 13px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: rgba(18, 10, 24, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 20px;
+                border-radius: 10px;
+                border: 1px solid rgba(137, 85, 117, 0.4);
+                gap: 14px;
+                min-width: 170px;
+                z-index: 130;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            body {
+                overflow-x: hidden;
+            }
+
+            #hero {
+                padding: 20px;
+                flex-direction: column;
+                justify-content: flex-end;
+                overflow: hidden;
+            }
+
+            .hero-img-frame {
+                width: 100%;
+                height: auto;
+                right: 0;
+                top: 14%;
+                padding: 6px;
+            }
+
+            .hero-img-frame img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                border-radius: 12px;
+            }
+
+            .hero-content {
+                width: 100%;
+            }
+
+            .hero-title {
+                font-size: clamp(1.8rem, 5vw, 3.5rem);
+            }
+
+            .gallery-grid {
+                gap: 16px;
+                padding: 15px;
+            }
+
+            .g-item {
+                width: 240px;
+            }
+
+            section {
+                padding: 40px 20px;
+            }
+
+            .gallery-intro,
+            .story-container,
+            .contact-row {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-intro,
+            .story-container {
+                gap: 20px;
+            }
+
+            .hero-content,
+            .gallery-intro,
+            .story-text,
+            #contact {
+                text-align: center;
+            }
+
+            .social-links {
+                gap: 10px;
+            }
+
+            .trending-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 280px);
+            }
+
+            .trending-item:first-child {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .trending-item:first-child img {
+                min-height: 280px;
+            }
+
+            .trending-title {
+                font-size: 2rem;
+            }
+
+            .trending-rank {
+                font-size: 0.8rem;
+                padding: 4px 10px;
+            }
+
+            .gallery-grid .skeleton-card {
+                width: 240px;
+                height: 280px;
+            }
+
+            .trending-grid .skeleton-card {
+                min-height: 280px;
+            }
+
+            .trending-item:first-child .skeleton-card {
+                min-height: 280px;
+            }
+
+            .gallery-error {
+                font-size: 0.85rem;
+                padding: 30px 16px;
+                margin: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #hero {
+                padding: 16px;
+            }
+
+            section {
+                padding: 32px 16px;
+            }
+
+            .hero-title {
+                font-size: clamp(1.55rem, 7.5vw, 2.3rem);
+            }
+
+            .hero-sub {
+                font-size: 0.82rem;
+            }
+
+            .social-links a {
+                width: 100%;
+                justify-content: center;
+                padding: 10px 14px;
+            }
+
+            /* Mobile trending text improvements */
+            .trending-title {
+                font-size: 1.8rem;
+            }
+
+            .trending-label {
+                font-size: 0.6rem;
+                letter-spacing: 0.2em;
+            }
+
+            .trending-rank {
+                font-size: 0.75rem;
+                padding: 4px 8px;
+                top: 12px;
+                left: 12px;
+            }
+
+            .trending-likes {
+                font-size: 0.65rem;
+                padding: 4px 8px;
+                bottom: 12px;
+                right: 12px;
+            }
+
+            /* Gallery caption mobile sizing */
+            .g-item-caption {
+                font-size: 0.6rem;
+                padding: 12px 12px 10px;
+                letter-spacing: 0.15em;
+            }
+
+            /* Like count mobile sizing */
+            .like-count {
+                font-size: 0.7rem;
+            }
+
+            .like-btn {
+                width: 28px;
+                height: 28px;
+                padding: 6px;
+            }
+
+            .like-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+
+        .nav-links a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+        }
+
+        .nav-logo {
+            letter-spacing: 0.08em;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        #visit-counter {
+            font-size: 0.65rem;
+            color: var(--text);
+            background: rgba(18, 10, 24, 0.5);
+            padding: 6px 12px;
+            border-radius: 999px;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(137, 85, 117, 0.35);
+            white-space: nowrap;
+        }
+
+        #visit-counter svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="page-veil"></div>
+
+    <!-- Custom Cursor -->
+    <div id="cursor">
+        <div id="cursor-dot"></div>
+        <div id="cursor-ring"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">Aditya Sharma</a>
+        <div class="menu-toggle" aria-label="Toggle menu" role="button" tabindex="0">☰</div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#work">Work</a></li>
+                <li><a href="#story">About</a></li>
+                <li><a href="#featured">Series</a></li>
+                <li><a href="#contact">Connect</a></li>
+            </ul>
+            <div id="visit-counter">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span>0 visits</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-line"></div>
+
+        <div class="hero-img-frame">
+            <img src="https://res.cloudinary.com/dtiq02chx/image/upload/v1776157602/img_4_vxno5o.jpg"
+                alt="Hero photo" />
+        </div>
+
+        <div class="hero-content">
+            <p class="hero-eyebrow">Aditya Sharma — Cinematic Frames</p>
+            <h1 class="hero-title">
+                Every frame<br />tells a <em>story.</em>
+            </h1>
+            <p class="hero-sub">
+                I don't photograph moments — I photograph the quiet weight of them.
+                The pause before, the breath after.
+            </p>
+            <a href="#work" class="hero-cta"><span></span>Explore the work</a>
+        </div>
+
+    </section>
+
+    <!-- Gallery / Work -->
+    <section id="work" class="gallery">
+        <p class="section-label reveal">Selected Work</p>
+        <div class="gallery-intro reveal">
+
+
+            <h2 class="gallery-heading">Stories captured<br />in still light</h2>
+            <p class="gallery-desc">
+                A collection of moments distilled — each image a chapter
+                in an ongoing conversation between light, subject, and silence.
+            </p>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </section>
+
+    <section id="trending">
+        <div class="trending-header">
+            <span class="trending-label">Most Loved</span>
+            <h2 class="trending-title">Trending</h2>
+        </div>
+        <div class="trending-grid" id="trending-grid"></div>
+    </section>
+
+    <!-- Story / About -->
+    <section id="story">
+        <div class="story-container">
+            <div class="story-img reveal">
+                <img src="https://res.cloudinary.com/dtiq02chx/image/upload/v1776157601/img_13_twzmod.jpg" alt="Aditya Sharma">
+            </div>
+            <div class="story-text">
+                <p class="section-label reveal">About Aditya</p>
+                <h2 class="story-heading reveal">
+                    I chase the<br /><em>unspoken</em> moment.
+                </h2>
+                <div class="story-body reveal">
+                    <p>
+                        I’m Aditya Sharma, a second-year BTech IT student at JECRC Foundation, Jaipur.
+
+                        I’m currently exploring full stack web development and building real-world projects to break into
+                        the tech industry. Alongside that, photography is something I naturally connect with — capturing
+                        moments that feel cinematic, raw, and honest.
+
+                    </p>
+                    <p>
+                        I’m working towards becoming a full stack developer with strong problem-solving skills, while also
+                        growing my creative side through photography.
+
+                        This portfolio is a blend of both — logic and emotion, code and visuals.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Series -->
+    <section id="featured">
+        <p class="section-label featured-label reveal">Ongoing Series</p>
+        <h2 class="featured-title reveal">In a single<br />photograph</h2>
+
+        <div class="featured-strip reveal">
+            <div class="strip-item">
+                <img src="https://res.cloudinary.com/dtiq02chx/image/upload/v1776157601/img_15_ylwztq.jpg"
+                    alt="Series 1" />
+                <div class="strip-overlay">
+                    <div class="strip-text">
+                        <span>Vol. I</span>
+                        <h4>Solitude</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="strip-item">
+                <img src="https://res.cloudinary.com/dtiq02chx/image/upload/v1776157601/img_13_twzmod.jpg"
+                    alt="Series 2" />
+                <div class="strip-overlay">
+                    <div class="strip-text">
+                        <span>Vol. II</span>
+                        <h4>Connection</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="strip-item">
+                <img src="https://res.cloudinary.com/dtiq02chx/image/upload/v1776157601/img_9_bz7sss.jpg"
+                    alt="Series 3" />
+                <div class="strip-overlay">
+                    <div class="strip-text">
+                        <span>Vol. III</span>
+                        <h4>Dusk</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="strip-item">
+                <img src="https://res.cloudinary.com/dtiq02chx/image/upload/v1776157600/img_2_f3sebz.jpg"
+                    alt="Series 4" />
+                <div class="strip-overlay">
+                    <div class="strip-text">
+                        <span>Vol. IV</span>
+                        <h4>Tender</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2 class="contact-heading reveal">
+            Let's craft<br />a visual <em>poem.</em>
+        </h2>
+        <p class="contact-sub reveal">Available for portraits, street narratives, and cinematic visual stories.</p>
+        <form id="contact-form" class="contact-form reveal">
+            <div class="contact-row">
+                <input id="contact-name" class="contact-field" type="text" name="name" placeholder="Name" required />
+                <input id="contact-email" class="contact-field" type="email" name="email" placeholder="Email"
+                    required />
+            </div>
+            <textarea id="contact-message" class="contact-field" name="message" placeholder="Message"
+                required></textarea>
+            <div class="contact-actions">
+                <button id="contact-submit" class="contact-submit" type="submit">Send Message</button>
+                <p id="contact-status" class="contact-status" aria-live="polite"></p>
+            </div>
+        </form>
+        <a href="mailto:xenth80314@gmail.com" class="contact-email reveal">xenth80314@gmail.com</a>
+        <p class="contact-sub reveal" style="margin-top:16px; margin-bottom:0;">+91 7426926569</p>
+        <div class="socials social-links reveal">
+            <a href="https://www.instagram.com/axitya_sharmx/" target="_blank" rel="noopener noreferrer"
+                aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
+                    <circle cx="12" cy="12" r="3.8"></circle>
+                    <circle cx="17.3" cy="6.8" r="1"></circle>
+                </svg>
+                Instagram
+            </a>
+            <a href="https://www.linkedin.com/in/aditya-sharma-832ab1326" target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect>
+                    <line x1="8.5" y1="10.2" x2="8.5" y2="16.2"></line>
+                    <circle cx="8.5" cy="7.8" r="1"></circle>
+                    <path d="M12 16.2v-3.4a2.1 2.1 0 0 1 4.2 0v3.4"></path>
+                </svg>
+                LinkedIn
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <span>© 2026 Aditya Sharma. All rights reserved.</span>
+        <span>Cinematic photography crafted in light and silence.</span>
+    </footer>
+
+    <script>
+        const galleryGrid = document.getElementById('gallery-grid');
+        const trendingGrid = document.getElementById('trending-grid');
+        const pageVeil = document.getElementById('page-veil');
+        const contactForm = document.getElementById('contact-form');
+        const contactStatus = document.getElementById('contact-status');
+        const contactSubmit = document.getElementById('contact-submit');
+        let galleryImages = [];
+        let isGalleryLoading = true;
+
+        // API Base URL - uses localhost for development, production URL for deployment
+        const BASE_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:5000' 
+            : 'https://your-backend-url.onrender.com';
+
+        async function getAnalytics() {
+            try {
+                const res = await fetch(`${BASE_URL}/api/analytics`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                console.log("Analytics:", data);
+            } catch (err) {
+                console.error("Failed to fetch analytics:", err);
+            }
+        }
+
+        async function updateVisits() {
+            try {
+                const res = await fetch(`${BASE_URL}/api/analytics`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                document.querySelector("#visit-counter span").textContent = `${data.visits ?? data.totalVisits ?? 0} visits`;
+            } catch (err) {
+                console.error("Failed to update visits:", err);
+            }
+        }
+
+        window.addEventListener("load", async () => {
+            try {
+                await fetch(`${BASE_URL}/api/analytics/visit`, {
+                    method: "POST"
+                });
+                await getAnalytics();
+                await updateVisits();
+            } catch (err) {
+                console.log("Analytics error:", err);
+            }
+        });
+
+        // ── Cursor ──
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+        // ── Page load animation ──
+        window.addEventListener('load', () => {
+            document.body.classList.add('page-ready');
+            if (pageVeil) pageVeil.classList.add('hide');
+        });
+
+        function animCursor() {
+            dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+            rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
+            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            requestAnimationFrame(animCursor);
+        }
+        animCursor();
+
+        document.querySelectorAll('a, button, .strip-item').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+        document.addEventListener('mouseover', (event) => {
+            if (event.target.closest('.g-item')) document.body.classList.add('hovering');
+        });
+        document.addEventListener('mouseout', (event) => {
+            if (event.target.closest('.g-item')) document.body.classList.remove('hovering');
+        });
+
+        // ── Scroll Reveal ──
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '50px' });
+
+        function observeRevealElements(elements) {
+            elements.forEach(el => observer.observe(el));
+        }
+        observeRevealElements(document.querySelectorAll('.reveal'));
+
+        // ── Smooth anchor scrolling with softer easing ──
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', (event) => {
+                const targetId = anchor.getAttribute('href');
+                if (!targetId || targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (!target) return;
+                event.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle && navLinks) {
+            const toggleMenu = () => navLinks.classList.toggle('active');
+            menuToggle.addEventListener('click', toggleMenu);
+            menuToggle.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleMenu();
+                }
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => navLinks.classList.remove('active'));
+            });
+        }
+
+        if (galleryGrid) {
+            galleryGrid.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                galleryGrid.scrollLeft += event.deltaY;
+            }, { passive: false });
+        }
+
+        // Handle image load for premium fade-in effect
+        document.addEventListener('load', (event) => {
+            if (event.target.classList && event.target.classList.contains('gallery-img')) {
+                event.target.classList.add('loaded');
+            }
+        }, true);
+
+        function renderGallery(imageList, isLoading = false) {
+            galleryGrid.innerHTML = '';
+
+            if (isLoading) {
+                // Show skeleton placeholders
+                const skeletonCount = 6;
+                const skeletons = Array(skeletonCount).fill(0).map((_, index) => `
+                    <div class="skeleton-card" style="--index: ${index}">
+                        <div class="skeleton-inner"></div>
+                    </div>
+                `).join('');
+                galleryGrid.innerHTML = skeletons;
+                return;
+            }
+
+            if (!imageList.length) {
+                galleryGrid.innerHTML = '<p class="gallery-desc reveal visible">No gallery images found yet.</p>';
+                return;
+            }
+
+            const cards = imageList
+                .filter((_, index) => index !== 18)
+                .map((img, index) => {
+                    const frameNum = index < 18 ? index + 1 : index + 2;
+                    return `
+        <div class="g-item gallery-item reveal" data-image-id="${img._id}" style="--index: ${index % 10}">
+          <img src="${img.url}" data-id="${img._id}" alt="Gallery image ${frameNum}" loading="lazy" decoding="async" class="gallery-img"/>
+          <div class="g-item-caption">Frame ${String(frameNum).padStart(2, '0')}</div>
+          <div class="like-container">
+            <button class="like-btn" data-id="${img._id}" aria-label="Like photo">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+            <span class="like-count">${img.likes || 0}</span>
+          </div>
+        </div>
+      `;
+            }).join('');
+
+            galleryGrid.innerHTML = cards;
+            observeRevealElements(galleryGrid.querySelectorAll('.reveal'));
+            applyLikedStates();
+        }
+
+        function renderTrending(imageList, isLoading = false) {
+            if (!trendingGrid) return;
+
+            if (isLoading) {
+                // Show skeleton placeholders
+                const skeletonCount = 4;
+                const skeletons = Array(skeletonCount).fill(0).map((_, index) => `
+                    <div class="skeleton-card" style="--index: ${index}">
+                        <div class="skeleton-inner"></div>
+                    </div>
+                `).join('');
+                trendingGrid.innerHTML = skeletons;
+                return;
+            }
+
+            if (!imageList.length) {
+                trendingGrid.innerHTML = '';
+                return;
+            }
+
+            const trending = [...imageList].sort((a, b) => b.likes - a.likes).slice(0, 4);
+            const cards = trending.map((img, index) => {
+                const rank = index + 1;
+                return `
+        <div class="trending-item reveal" data-image-id="${img._id}" style="--index: ${index}">
+          <span class="trending-rank">#${rank}</span>
+          <img src="${img.url}" data-id="${img._id}" alt="Trending image ${rank}" loading="lazy" decoding="async" class="gallery-img"/>
+          <div class="trending-likes">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            ${img.likes || 0}
+          </div>
+          <button class="like-btn" data-id="${img._id}" aria-label="Like photo" style="position: absolute; bottom: 16px; left: 16px; opacity: 0; pointer-events: none;">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+        </div>
+      `;
+            }).join('');
+
+            trendingGrid.innerHTML = cards;
+            observeRevealElements(trendingGrid.querySelectorAll('.reveal'));
+            applyLikedStates();
+        }
+
+        function showContactStatus(message, type) {
+            contactStatus.textContent = message;
+            contactStatus.className = `contact-status ${type || ''} show`;
+        }
+
+        function setupLightbox() {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'gallery-lightbox';
+            lightbox.innerHTML = `
+                <button class="lightbox-close" aria-label="Close image preview">&times;</button>
+                <img src="" alt="Expanded gallery image" />
+            `;
+            document.body.appendChild(lightbox);
+
+            const lightboxImage = lightbox.querySelector('img');
+            const closeButton = lightbox.querySelector('.lightbox-close');
+
+            function openLightbox(imageSrc) {
+                lightboxImage.src = imageSrc;
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = '';
+                lightboxImage.src = '';
+            }
+
+            closeButton.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (event) => {
+                if (event.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+            });
+
+            return { openLightbox };
+        }
+
+        // Helper to manage liked images in localStorage
+        function getLikedImages() {
+            try {
+                return JSON.parse(localStorage.getItem('likedImages') || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function addLikedImage(imageId) {
+            const liked = getLikedImages();
+            if (!liked.includes(imageId)) {
+                liked.push(imageId);
+                localStorage.setItem('likedImages', JSON.stringify(liked));
+            }
+        }
+
+        function isImageLiked(imageId) {
+            return getLikedImages().includes(imageId);
+        }
+
+        // Apply liked state to buttons on render
+        function applyLikedStates() {
+            const likedImages = getLikedImages();
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                const imageId = btn.dataset.id;
+                if (imageId && likedImages.includes(imageId)) {
+                    btn.classList.add('liked');
+                    btn.disabled = true;
+                }
+            });
+        }
+
+        function setupGalleryLikes() {
+            // Apply liked states to existing buttons
+            applyLikedStates();
+
+            document.addEventListener('click', async (event) => {
+                const likeBtn = event.target.closest('.like-btn');
+                if (!likeBtn) return;
+
+                const imageId = likeBtn.dataset.id;
+                if (!imageId) return;
+
+                // Prevent spam: check if already liked or disabled
+                if (likeBtn.disabled || isImageLiked(imageId)) {
+                    return;
+                }
+
+                // Disable button immediately
+                likeBtn.disabled = true;
+
+                // Trigger premium animation immediately
+                likeBtn.classList.remove('animate-like');
+                void likeBtn.offsetWidth; // Force reflow to restart animation
+                likeBtn.classList.add('animate-like', 'liked');
+
+                // Remove animation class after it completes
+                setTimeout(() => {
+                    likeBtn.classList.remove('animate-like');
+                }, 350);
+
+                try {
+                    const response = await fetch(`${BASE_URL}/api/images/like/${imageId}`, {
+                        method: 'POST'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Request failed with status ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.likes !== undefined) {
+                        const countEl = likeBtn.nextElementSibling;
+                        if (countEl) countEl.textContent = data.likes;
+                    }
+
+                    // Store in localStorage to prevent future likes
+                    addLikedImage(imageId);
+
+                    galleryImages = galleryImages.map((img) => (
+                        img._id === imageId ? { ...img, likes: data.likes } : img
+                    ));
+                } catch (error) {
+                    console.error('Failed to like image:', error);
+                    // Re-enable button on error so user can retry
+                    likeBtn.disabled = false;
+                    likeBtn.classList.remove('liked');
+                }
+            });
+        }
+
+        // Unified single/double tap handler for gallery images
+        function setupGalleryTapHandler(lightboxOpener) {
+            const tapDelay = 200; // Faster for mobile responsiveness
+            const tapMap = new Map();
+
+            function createHeartOverlay(gItem) {
+                const heart = document.createElement('div');
+                heart.className = 'double-tap-heart';
+                heart.innerHTML = `
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                `;
+                gItem.appendChild(heart);
+                return heart;
+            }
+
+            function showHeartAnimation(gItem) {
+                let heart = gItem.querySelector('.double-tap-heart');
+                if (!heart) {
+                    heart = createHeartOverlay(gItem);
+                }
+
+                heart.classList.remove('animate');
+                void heart.offsetWidth;
+                heart.classList.add('animate');
+
+                setTimeout(() => {
+                    heart.classList.remove('animate');
+                }, 700);
+            }
+
+            async function triggerLike(gItem) {
+                const likeBtn = gItem.querySelector('.like-btn');
+                if (!likeBtn) return;
+
+                const imageId = likeBtn.dataset.id;
+                if (!imageId) return;
+
+                // Prevent spam: check if already liked or disabled
+                if (likeBtn.disabled || isImageLiked(imageId)) {
+                    return;
+                }
+
+                // Disable button immediately
+                likeBtn.disabled = true;
+
+                // Animate the like button
+                likeBtn.classList.remove('animate-like');
+                void likeBtn.offsetWidth;
+                likeBtn.classList.add('animate-like', 'liked');
+
+                setTimeout(() => {
+                    likeBtn.classList.remove('animate-like');
+                }, 350);
+
+                try {
+                    const response = await fetch(`${BASE_URL}/api/images/like/${imageId}`, {
+                        method: 'POST'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Request failed with status ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.likes !== undefined) {
+                        const countEl = likeBtn.nextElementSibling;
+                        if (countEl) countEl.textContent = data.likes;
+                    }
+
+                    // Store in localStorage to prevent future likes
+                    addLikedImage(imageId);
+
+                    galleryImages = galleryImages.map((img) => (
+                        img._id === imageId ? { ...img, likes: data.likes } : img
+                    ));
+                } catch (error) {
+                    console.error('Failed to like image:', error);
+                    // Re-enable button on error so user can retry
+                    likeBtn.disabled = false;
+                    likeBtn.classList.remove('liked');
+                }
+            }
+
+            function handleTap(event) {
+                // Ignore taps on skeleton cards
+                if (event.target.closest('.skeleton-card')) return;
+
+                const item = event.target.closest('.g-item.gallery-item, .trending-item');
+                if (!item) return;
+
+                // Ignore taps on like button
+                if (event.target.closest('.like-btn')) return;
+
+                const imageId = item.dataset.imageId;
+                if (!imageId) return;
+
+                const now = Date.now();
+                const lastTap = tapMap.get(imageId);
+
+                if (lastTap && (now - lastTap < tapDelay)) {
+                    // Double tap detected
+                    event.preventDefault();
+                    clearTimeout(item._singleTapTimer);
+                    tapMap.delete(imageId);
+                    showHeartAnimation(item);
+                    triggerLike(item);
+                } else {
+                    // First tap - wait to see if it's a single or double
+                    tapMap.set(imageId, now);
+                    item._singleTapTimer = setTimeout(() => {
+                        // Single tap confirmed
+                        tapMap.delete(imageId);
+                        const clickedImage = item.querySelector('img');
+                        if (clickedImage && lightboxOpener) {
+                            lightboxOpener.openLightbox(clickedImage.src);
+                        }
+                    }, tapDelay);
+                }
+            }
+
+            // Listen on both gallery and trending grids - touch for mobile, click for desktop
+            galleryGrid.addEventListener('click', handleTap);
+            if (trendingGrid) trendingGrid.addEventListener('click', handleTap);
+
+            // Touch events for smoother mobile experience
+            let touchStartTime = 0;
+            let touchItem = null;
+
+            function handleTouchStart(event) {
+                touchItem = event.target.closest('.g-item.gallery-item, .trending-item');
+                touchStartTime = Date.now();
+            }
+
+            function handleTouchEnd(event) {
+                if (!touchItem) return;
+
+                const touchDuration = Date.now() - touchStartTime;
+                const isQuickTap = touchDuration < 300; // Quick tap threshold
+
+                // Create synthetic click event for our handler
+                if (isQuickTap) {
+                    // Small delay to allow double-tap detection
+                    setTimeout(() => {
+                        handleTap(event);
+                    }, 10);
+                }
+
+                touchItem = null;
+            }
+
+            galleryGrid.addEventListener('touchstart', handleTouchStart, { passive: true });
+            galleryGrid.addEventListener('touchend', handleTouchEnd, { passive: true });
+            if (trendingGrid) {
+                trendingGrid.addEventListener('touchstart', handleTouchStart, { passive: true });
+                trendingGrid.addEventListener('touchend', handleTouchEnd, { passive: true });
+            }
+        }
+
+        async function fetchGalleryImages() {
+            isGalleryLoading = true;
+            renderGallery(galleryImages, isGalleryLoading);
+            renderTrending(galleryImages, isGalleryLoading);
+
+            try {
+                const response = await fetch(`${BASE_URL}/api/images`);
+                if (!response.ok) {
+                    throw new Error(`Request failed with status ${response.status}`);
+                }
+                galleryImages = await response.json();
+            } catch (error) {
+                console.error('Failed to fetch gallery images:', error);
+                galleryImages = [];
+                // Show user-friendly error message
+                galleryGrid.innerHTML = '<p class="gallery-error">Failed to load images. Please try again later.</p>';
+                if (trendingGrid) trendingGrid.innerHTML = '<p class="gallery-error">Failed to load trending images.</p>';
+            } finally {
+                isGalleryLoading = false;
+                if (galleryImages.length > 0) {
+                    renderGallery(galleryImages, isGalleryLoading);
+                    renderTrending(galleryImages, isGalleryLoading);
+                }
+            }
+        }
+
+        fetchGalleryImages();
+        const lightbox = setupLightbox();
+        setupGalleryLikes();
+        setupGalleryTapHandler(lightbox);
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const name = contactForm.name.value.trim();
+                const email = contactForm.email.value.trim();
+                const message = contactForm.message.value.trim();
+
+                if (!name || !email || !message) {
+                    showContactStatus('Please fill out all fields.', 'error');
+                    return;
+                }
+
+                try {
+                    contactSubmit.disabled = true;
+                    contactSubmit.textContent = 'Sending...';
+
+                    const response = await fetch(`${BASE_URL}/api/contact`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, message })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Request failed with status ${response.status}`);
+                    }
+
+                    contactForm.reset();
+                    showContactStatus('Message sent successfully', 'success');
+                } catch (error) {
+                    console.error('Failed to submit contact form:', error);
+                    showContactStatus('Failed to send message', 'error');
+                } finally {
+                    contactSubmit.disabled = false;
+                    contactSubmit.textContent = 'Send Message';
+                }
+            });
+        }
+
+        // ── Subtle hero parallax ──
+        const heroFrame = document.querySelector('.hero-img-frame');
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            if (heroFrame) heroFrame.style.transform = `translateY(${y * 0.1}px)`;
+        });
+
+        // ── Nav hide/show on scroll ──
+        let lastY = 0;
+        const navEl = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            navEl.style.transform = y > lastY && y > 80 ? 'translateY(-100%)' : 'translateY(0)';
+            navEl.style.transition = 'transform 0.4s ease';
+            lastY = y;
+        });
+    </script>
+</body>
+
+</html>

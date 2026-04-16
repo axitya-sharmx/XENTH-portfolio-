@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Upload</title>
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --ink: #1a1814;
+      --mid: #8a8680;
+      --line: #e0ddd9;
+      --accent: #c8a96e;
+      --ok: #286f4a;
+      --error: #a93b3b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .panel {
+      width: min(520px, 100%);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .heading {
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    .note {
+      font-size: 0.86rem;
+      color: var(--mid);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--mid);
+      margin-bottom: 6px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    select,
+    input[type="file"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status {
+      margin-top: 14px;
+      font-size: 0.86rem;
+      line-height: 1.4;
+      min-height: 1.2em;
+    }
+
+    .status.ok { color: var(--ok); }
+    .status.error { color: var(--error); }
+
+    .output {
+      margin-top: 16px;
+      width: 100%;
+      min-height: 140px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      resize: vertical;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      font-family: Consolas, "Courier New", monospace;
+      color: #2b2823;
+      background: #fcfbf9;
+    }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <h1 class="heading">Gallery URL Builder</h1>
+    <p class="note">Paste Cloudinary image URLs and generate the `images` array for your portfolio page.</p>
+
+    <form id="photo-form">
+      <div class="field">
+        <label for="photo-url">Cloudinary URL</label>
+        <input id="photo-url" name="photo-url" type="text" placeholder="https://res.cloudinary.com/.../image/upload/..." required />
+      </div>
+
+      <button id="save-btn" type="submit">Add URL</button>
+      <p id="status" class="status" aria-live="polite"></p>
+    </form>
+    <textarea id="array-output" class="output" readonly>const images = [
+  "PASTE_URL_1",
+  "PASTE_URL_2",
+  "PASTE_URL_3"
+];</textarea>
+  </main>
+
+  <script>
+    const form = document.getElementById("photo-form");
+    const statusEl = document.getElementById("status");
+    const saveBtn = document.getElementById("save-btn");
+    const urlInput = document.getElementById("photo-url");
+    const arrayOutput = document.getElementById("array-output");
+    const imageUrls = [];
+
+    function setStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = "status " + (type || "");
+    }
+
+    function updateOutput() {
+      if (!imageUrls.length) {
+        arrayOutput.value = `const images = [
+  "PASTE_URL_1",
+  "PASTE_URL_2",
+  "PASTE_URL_3"
+];`;
+        return;
+      }
+      const rows = imageUrls.map((url) => `  "${url}"`);
+      arrayOutput.value = `const images = [\n${rows.join(",\n")}\n];`;
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      setStatus("", "");
+
+      const url = urlInput.value.trim();
+
+      if (!url || !/^https?:\/\/.+/i.test(url)) {
+        setStatus("Please enter a valid image URL.", "error");
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Adding...";
+      imageUrls.push(url);
+      updateOutput();
+      form.reset();
+      setStatus("URL added. Copy this array into index.html.", "ok");
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Add URL";
+    });
+  </script>
+</body>
+</html>
