@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const images = await Image.find();
+    console.log(images);
     res.json(images);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch images" });
