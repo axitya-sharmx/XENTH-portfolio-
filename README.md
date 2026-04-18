@@ -1,41 +1,58 @@
-# 📸 Cinematic Photography Portfolio
+# 📸 XENTH – Photography Portfolio
 
-A full-stack photography portfolio built to showcase cinematic visuals with a dynamic and interactive UI.
+A full-stack photography portfolio website with a dynamic gallery, like system, and analytics integration.
+ 🚀 Live Demo
+👉 https://xenth.netlify.app
 
-## 🚀 Live Demo
 
-https://xenth.netlify.app/
+ ✨ Features
+- Dynamic gallery with Cloudinary images
+- Like system with real-time updates
+- Trending section based on engagement
+- Admin panel for image management
+- Analytics tracking (visits & interactions)
+- Responsive UI with modern design
 
-## ✨ Features
 
-* Dynamic image gallery
-* Trending section based on likes
-* Double-tap to like ❤️
-* Real-time like updates
-* Admin panel for uploading images
-* Fully responsive design
 
-## 🧠 Tech Stack
+🛠️ Tech Stack
+**Frontend:**
+- HTML, CSS, JavaScript
 
-* Frontend: HTML, CSS, JavaScript
-* Backend: Node.js, Express
-* Database: MongoDB Atlas
-* Image Hosting: Cloudinary
-* Deployment: Netlify + Render
+**Backend:**
+- Node.js, Express.js
+- MongoDB (Atlas)
 
-## 📂 Project Structure
+**Deployment:**
+- Frontend → Netlify
+- Backend → Render
 
-* `/frontend` → UI
-* `/server` → backend API
-* `/admin` → upload system
 
-## ⚙️ Key Learnings
 
-* API integration with deployed backend
-* Handling production vs development environments
-* Full-stack deployment workflow
-* Debugging real-world issues
+⚙️ Key Highlights
+- Integrated frontend with backend APIs
+- Implemented like & analytics tracking system
+- Managed image storage using Cloudinary
+- Built admin workflow for content updates
+- Deployed full-stack project with proper API handling
 
-## 👨‍💻 Author
+📚 What I Learned
+- Connecting frontend with backend APIs
+- Handling real-world deployment issues
+- Working with databases (MongoDB)
+- Structuring a full-stack project
+- Debugging and optimizing UI interactions
 
-Aditya Sharma
+
+
+ 🧠 Future Improvements
+- Authentication system for admin
+- Better analytics dashboard
+- Performance optimizations
+- Improved UI/UX animations
+
+
+
+👨‍💻 Author
+Aditya Sharma  
+B.Tech IT | Aspiring Full Stack Developer
