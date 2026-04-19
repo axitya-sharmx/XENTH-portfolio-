@@ -6,13 +6,31 @@
     const contactStatus = document.getElementById("contact-status");
     const contactSubmit = document.getElementById("contact-submit");
     let galleryImages = [];
-    let isGalleryLoading = true;
 
     // API Base URL - uses localhost for development, production URL for deployment
     const BASE_URL =
       window.location.hostname === "localhost"
         ? "http://localhost:5000"
         : "https://portfolio-backend-750g.onrender.com";
+
+    function cloudinaryOptimizedUrl(url) {
+      if (!url || typeof url !== "string") return url;
+      if (!url.includes("res.cloudinary.com")) return url;
+      const marker = "/upload/";
+      const i = url.indexOf(marker);
+      if (i === -1) return url;
+      const rest = url.slice(i + marker.length);
+      if (rest.startsWith("f_auto,q_auto,w_800/")) return url;
+      return url.slice(0, i + marker.length) + "f_auto,q_auto,w_800/" + rest;
+    }
+
+    function onReady(fn) {
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", fn, { once: true });
+      } else {
+        fn();
+      }
+    }
 
     async function getAnalytics() {
       try {
@@ -37,17 +55,19 @@
       }
     }
 
-    window.addEventListener("load", async () => {
-      try {
-        await fetch(`${BASE_URL}/api/analytics/visit`, {
-          method: "POST",
-        });
-        await getAnalytics();
-        await updateVisits();
-      } catch (err) {
-        console.log("Analytics error:", err);
-      }
-    });
+    function runAnalytics() {
+      void (async () => {
+        try {
+          await fetch(`${BASE_URL}/api/analytics/visit`, {
+            method: "POST",
+          });
+          await getAnalytics();
+          await updateVisits();
+        } catch (err) {
+          console.log("Analytics error:", err);
+        }
+      })();
+    }
 
     // ── Cursor ──
     const dot = document.getElementById("cursor-dot");
@@ -60,12 +80,6 @@
     document.addEventListener("mousemove", (e) => {
       mx = e.clientX;
       my = e.clientY;
-    });
-
-    // ── Page load animation ──
-    window.addEventListener("load", () => {
-      document.body.classList.add("page-ready");
-      if (pageVeil) pageVeil.classList.add("hide");
     });
 
     function animCursor() {
@@ -195,6 +209,7 @@
     );
 
     function renderGallery(imageList, isLoading = false) {
+      if (!galleryGrid) return;
       galleryGrid.innerHTML = "";
 
       if (isLoading) {
@@ -223,13 +238,13 @@
       const cards = imageList
         .filter((_, index) => index !== 18)
         .map((img, index) => {
-          console.log("IMAGE ITEM:", img);
+          const displayUrl = cloudinaryOptimizedUrl(img.url);
           const frameNum = index < 18 ? index + 1 : index + 2;
           return `
         <div class="g-item gallery-item reveal card" data-image-id="${img._id}">
           <div class="image-container">
-            <img src="${img.url}" data-id="${img._id}" alt="Gallery image ${frameNum}" loading="lazy" decoding="async" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/2a0a3f/ffffff?text=Gallery+Image'"/>
-            <button class="preview-icon" aria-label="View image preview" data-preview-src="${img.url}">
+            <img src="${displayUrl}" data-id="${img._id}" alt="Gallery image ${frameNum}" loading="lazy" decoding="async" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/2a0a3f/ffffff?text=Gallery+Image'"/>
+            <button class="preview-icon" aria-label="View image preview" data-preview-src="${displayUrl}">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
@@ -285,6 +300,7 @@
         .slice(0, 4);
       const cards = trending
         .map((img, index) => {
+          const displayUrl = cloudinaryOptimizedUrl(img.url);
           const rank = index + 1;
           // Masonry classes: 0=wide, 1=normal, 2=tall, 3=normal
           const masonryClass =
@@ -293,8 +309,8 @@
         <div class="trending-item reveal card ${masonryClass}" data-image-id="${img._id}" style="--index: ${index}">
           <span class="trending-rank">#${rank}</span>
           <div class="image-container">
-            <img src="${img.url}" data-id="${img._id}" alt="Trending image ${rank}" loading="lazy" decoding="async" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/2a0a3f/ffffff?text=Trending'"/>
-            <button class="preview-icon" aria-label="View image preview" data-preview-src="${img.url}">
+            <img src="${displayUrl}" data-id="${img._id}" alt="Trending image ${rank}" loading="lazy" decoding="async" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/2a0a3f/ffffff?text=Trending'"/>
+            <button class="preview-icon" aria-label="View image preview" data-preview-src="${displayUrl}">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
@@ -654,38 +670,41 @@
       }
     }
 
-    async function fetchGalleryImages() {
-      isGalleryLoading = true;
-      renderGallery(galleryImages, isGalleryLoading);
-      renderTrending(galleryImages, isGalleryLoading);
-
-      try {
-        const response = await fetch(`${BASE_URL}/api/images`);
-        if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("API DATA:", data);
-        if (!Array.isArray(data)) return;
-        galleryImages = data;
-      } catch (error) {
-        console.error("Failed to fetch gallery images:", error);
-        galleryImages = [];
-        // Show user-friendly error message
-        galleryGrid.innerHTML =
-          '<p class="gallery-error">Failed to load images. Please try again later.</p>';
-        if (trendingGrid)
-          trendingGrid.innerHTML =
-            '<p class="gallery-error">Failed to load trending images.</p>';
-      } finally {
-        isGalleryLoading = false;
-        console.log("Trending images:", galleryImages);
-        renderGallery(galleryImages, isGalleryLoading);
-        renderTrending(galleryImages, isGalleryLoading);
-      }
+    function loadImages() {
+      fetch(`${BASE_URL}/api/images`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`Request failed with status ${res.status}`);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (!Array.isArray(data)) return;
+          galleryImages = data;
+          renderGallery(galleryImages, false);
+          renderTrending(galleryImages, false);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch gallery images:", error);
+          galleryImages = [];
+          if (galleryGrid)
+            galleryGrid.innerHTML =
+              '<p class="gallery-error">Failed to load images. Please try again later.</p>';
+          if (trendingGrid)
+            trendingGrid.innerHTML =
+              '<p class="gallery-error">Failed to load trending images.</p>';
+        });
     }
 
-    fetchGalleryImages();
+    renderGallery([], true);
+    renderTrending([], true);
+    onReady(() => {
+      document.body.classList.add("page-ready");
+      if (pageVeil) pageVeil.classList.add("hide");
+      loadImages();
+      setTimeout(runAnalytics, 0);
+    });
+
     const lightbox = setupLightbox();
     setupGalleryLikes();
     setupGalleryTapHandler(lightbox);
