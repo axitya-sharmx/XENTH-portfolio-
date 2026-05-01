@@ -21,8 +21,7 @@ app.get("/api/test", (req, res) => {
   res.send("API working");
 });
 
-// Static route for uploads
-app.use("/uploads", express.static("uploads"));
+// Removed: Static route for uploads - images now served directly from Cloudinary
 
 app.use("/api/images", imageRoutes);
 app.use("/api/contact", contactRoutes);
