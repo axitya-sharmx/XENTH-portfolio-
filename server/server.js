@@ -28,10 +28,8 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/analytics", analyticsRoutes);
 
 // ✅ STATIC + FRONTEND ROUTES (moved OUTSIDE)
-app.use(express.static(path.join(__dirname, "../")));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
 });
 
 // ✅ START SERVER (ONLY THIS SHOULD BE INSIDE)
