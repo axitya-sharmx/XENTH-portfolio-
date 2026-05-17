@@ -13,6 +13,16 @@ A full-stack photography portfolio website with a dynamic gallery, like system, 
 - Analytics tracking (visits & interactions)
 - Responsive UI with modern design
 
+## 📸 Preview
+
+### Homepage
+<img width="1900" height="915" alt="image" src="https://github.com/user-attachments/assets/a9668e4c-f2f3-4665-9cae-df4f3f56cab6" />
+
+### Gallery Section
+<img width="1901" height="910" alt="image" src="https://github.com/user-attachments/assets/0329a7e2-8411-45f7-a003-21bcdf834f4f" />
+
+### Trending section 
+<img width="1904" height="909" alt="image" src="https://github.com/user-attachments/assets/81ddb36d-2d85-4265-9345-c10613234b93" />
 
 
 🛠️ Tech Stack
